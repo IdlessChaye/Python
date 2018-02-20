@@ -1,5 +1,4 @@
 # Python_小林家的龙女仆
-***
 ## 效果图
 ![finalOutputPicture](https://github.com/IdlessChaye/Python/blob/master/%E5%B0%8F%E9%82%BB%E5%AE%B6%E7%9A%84%E9%BE%99%E5%A5%B3%E4%BB%86/dragon.png?raw=true)
 ## 用到的图片素材
