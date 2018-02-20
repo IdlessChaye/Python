@@ -1,4 +1,4 @@
-# 深度神经网络识别图片中的字母
+# Python_深度神经网络识别图片中的字母
 ## 参考教程
 > [使用python实现深度神经网络](http://blog.csdn.net/oxuzhenyi/article/details/73026790)
 ## 程序入口
