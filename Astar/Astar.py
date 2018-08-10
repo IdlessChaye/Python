@@ -1,4 +1,4 @@
-
+﻿
 class Node:
     def __int__(self):
         self.unable = False
@@ -38,10 +38,12 @@ def SetUnableMapNode(map, ls=()):  # 要求一个坐标队列，里边的点上�
     return map
 
 
-def GetDistanceFromDes(map, mapSize, desIndex):  # map二维数组，mapsize(m,n),desIndex终点坐标
+def GetDistanceFromDes(map, desIndex,keyixiezhezou):  # map二维数组，mapsize(m,n),desIndex终点坐标 广度优先搜索
     for ls in map:
         for node in ls:
             node.added = False
+    mapSizeY = len(map)
+    mapSizeX = len(map[0])
     desNode = map[desIndex[0]][desIndex[1]]
     desNode.distanceFromDes = 0
     addedList = list()  # 已经加入的队列，已有值distanceFromDes
@@ -56,24 +58,35 @@ def GetDistanceFromDes(map, mapSize, desIndex):  # map二维数组，mapsize(m,n
             y = mainNode.y
             x = mainNode.x
             for needNodey in (y + 1, y, y - 1):
-                if needNodey < 0 or needNodey >= mapSize[0]:
+                if needNodey < 0 or needNodey >= mapSizeY:
                     continue
                 for needNodex in (x + 1, x, x - 1):
-                    if needNodex < 0 or needNodex >= mapSize[1]:
+                    if needNodex < 0 or needNodex >= mapSizeX:
                         continue
                     needNode = map[needNodey][needNodex]  # 坐标不出界
                     if needNode.unable == True or needNode.added == True:
                         continue  # 坐标也满足add的要求
                     yOffset = needNodey - y
                     xOffset = needNodex - x
-                    allOffset = yOffset + xOffset
-                    if allOffset == 1 or allOffset == -1:
+                    if (yOffset,xOffset) == (-1,0): #上
                         distanceFromDes = mainDistanceFromDes + 1
-                    elif allOffset == -2 or allOffset == 0 or allOffset == 2:
-                        distanceFromDes = mainDistanceFromDes + 1.4
+                    elif (yOffset,xOffset) == (1,0): #下
+                        distanceFromDes = mainDistanceFromDes + 1
+                    elif (yOffset,xOffset) == (0,-1): #左
+                        distanceFromDes = mainDistanceFromDes + 1
+                    elif (yOffset,xOffset) == (0,1): #右
+                        distanceFromDes = mainDistanceFromDes + 1
+                    elif keyixiezhezou:
+                        if (yOffset,xOffset) == (-1,-1): #左上
+                            distanceFromDes = mainDistanceFromDes + 1.4
+                        elif (yOffset,xOffset) == (-1,1): #右上
+                            distanceFromDes = mainDistanceFromDes + 1.4
+                        elif (yOffset,xOffset) == (1,-1): #左上
+                            distanceFromDes = mainDistanceFromDes + 1.4
+                        elif (yOffset,xOffset) == (1,1): #右下
+                            distanceFromDes = mainDistanceFromDes + 1.4
                     else:
-                        print("error in needNode's distanceFromDes")
-                    
+                        continue
                     if needNode in needList:  # 设置needNode的距离，要求最小
                         if distanceFromDes < needNode.distanceFromDes:
                             needNode.distanceFromDes = distanceFromDes
@@ -89,10 +102,12 @@ def GetDistanceFromDes(map, mapSize, desIndex):  # map二维数组，mapsize(m,n
     return map
 
 
-def GetMinDistanceNodeList(map, mapSize, oriIndex, desIndex):
+def GetMinDistanceNodeList(map, oriIndex, desIndex, keyixiezhezou):
     for ls in map:
         for node in ls:
             node.added = False
+    mapSizeY = len(map)
+    mapSizeX = len(map[0])
     openedList = list()
     node = map[oriIndex[0]][oriIndex[1]]
     node.distanceFromOri = 0
@@ -115,23 +130,36 @@ def GetMinDistanceNodeList(map, mapSize, oriIndex, desIndex):
         x = node.x
         parentDistanceFromOri = node.distanceFromOri
         for needNodey in (y + 1, y, y - 1):
-            if needNodey < 0 or needNodey >= mapSize[0]:
+            if needNodey < 0 or needNodey >= mapSizeY:
                 continue
             for needNodex in (x + 1, x, x - 1):
-                if needNodex < 0 or needNodex >= mapSize[1]:
+                if needNodex < 0 or needNodex >= mapSizeX:
                     continue
                 needNode = map[needNodey][needNodex]  # 坐标不出界
                 if needNode.unable == True or needNode.closed == True or needNode.added == True:
                     continue  # 坐标也满足add的要求
                 yOffset = needNodey - y
                 xOffset = needNodex - x
-                allOffset = yOffset + xOffset
-                if allOffset == 1 or allOffset == -1:
+                if (yOffset,xOffset) == (-1,0): #上
                     distanceFromOri = parentDistanceFromOri + 1
-                elif allOffset == -2 or allOffset == 0 or allOffset == 2:
-                    distanceFromOri = parentDistanceFromOri + 1.4
+                elif (yOffset,xOffset) == (1,0): #下
+                    distanceFromOri = parentDistanceFromOri + 1
+                elif (yOffset,xOffset) == (0,-1): #左
+                    distanceFromOri = parentDistanceFromOri + 1
+                elif (yOffset,xOffset) == (0,1): #右
+                    distanceFromOri = parentDistanceFromOri + 1
+                elif keyixiezhezou:
+                    if (yOffset,xOffset) == (-1,-1): #左上
+                        distanceFromOri = parentDistanceFromOri + 1.4
+                    elif (yOffset,xOffset) == (-1,1): #右上
+                        distanceFromOri = parentDistanceFromOri + 1.4
+                    elif (yOffset,xOffset) == (1,-1): #左上
+                        distanceFromOri = parentDistanceFromOri + 1.4
+                    elif (yOffset,xOffset) == (1,1): #右下
+                        distanceFromOri = parentDistanceFromOri + 1.4
                 else:
-                    print("error in needNode's distanceFromDes")
+                     continue
+
                 if needNode in neighboursList:  # 设置needNode的距离，要求最小
                     if distanceFromOri < needNode.distanceFromOri:
                         needNode.distanceFromOri = distanceFromOri
@@ -149,11 +177,70 @@ def GetMinDistanceNodeList(map, mapSize, oriIndex, desIndex):
     return None
 
 
-def main():
-    TestGetDistanceFromDes()
+def LittleCarHowToGo(finalList,keyixiezhezou):
+    # 上1右2下3左4
+    directionList = list()
+    for i in range(len(finalList)-1):
+        thisNode = finalList[i]
+        thisNodeY = thisNode.y
+        thisNodeX = thisNode.x
+        nextNode = finalList[i+1]
+        nextNodeY = nextNode.y
+        nextNodeX = nextNode.x
+        yOffset = nextNodeY - thisNodeY
+        xOffset = nextNodeX - thisNodeX
+        if (yOffset,xOffset) == (-1,0): #上
+            directionList.append('1')
+        elif (yOffset,xOffset) == (0,1): #右
+            directionList.append('2')
+        elif (yOffset,xOffset) == (1,0):
+            directionList.append('3')    
+        elif (yOffset,xOffset) == (0,-1):
+            directionList.append('4')
+        elif keyixiezhezou:
+            print('我还没想好呢！！！')
+            break
+
+    # 将只表示方向的走法改成向左向右转的走法
+    howToGoList = list()
+    steps = 0
+    lastDirection = '1'
+    for i in range(len(directionList)):            
+        thisDirection = directionList[i]
+        if thisDirection == lastDirection:
+            steps = steps + 1
+        else:
+            howToGoList.append(str(steps))
+            steps = 1
+            if thisDirection == '4':
+                if lastDirection == '1':
+                    howToGoList.append('l')
+                elif lastDirection == '3':
+                    howToGoList.append('r')
+                else:
+                    howToGoList.append('b')
+            elif thisDirection == '1':
+                if lastDirection == '4':
+                    howToGoList.append('r')
+                elif lastDirection == '2':
+                    howToGoList.append('l')
+                else:
+                    howToGoList.append('b')
+            else:
+                 offset = int(thisDirection) - int(lastDirection)
+                 if offset == 1:
+                     howToGoList.append('r')
+                 elif offset == -1:
+                     howToGoList.append('l')
+                 else:
+                     howToGoList.append('b')
+        lastDirection = thisDirection
+    howToGoList.append(str(steps))
+    return howToGoList
 
 
 def TestGetDistanceFromDes():
+    keyixiezhezou = False #能不能斜着走
     m = 6 #设置地图的长
     n = 6 #设置地图的宽
     oriIndex = (0, 0) #设置起点坐标
@@ -161,8 +248,10 @@ def TestGetDistanceFromDes():
     map = GenerateMap(m, n) #生成地图节点
     obstacleList = [(1,1),(2,1),(3,1),(4,3),(1,3),(2,3),(3,3),(0,1),(5,1),(5,3)] #设置障碍
     map = SetUnableMapNode(map,obstacleList)  #在地图中添加障碍
-    GetDistanceFromDes(map, (m, n),desIndex) #添加终点，并计算节点与终点的距离
 
+    GetDistanceFromDes(map,desIndex,keyixiezhezou) #添加终点，并计算节点与终点的距离
+
+    print()
     print("Distance From Destination")
     for nodeRow in map:
         for node in nodeRow:
@@ -172,18 +261,16 @@ def TestGetDistanceFromDes():
                 print('  X  ',end = " ")
         print()
     print()
+    TestGetMinDistanceNodeList(map, oriIndex, desIndex,keyixiezhezou) #终点距离测试完了，进入下一阶段
 
-    TestGetMinDistanceNodeList(map,(m,n),oriIndex,desIndex) #终点距离测试完了，进入下一阶段
 
-def TestGetMinDistanceNodeList(map, mapSize, oriIndex,desIndex):
-    finalList = GetMinDistanceNodeList(map, mapSize, oriIndex, desIndex) #添加起点，并生成起点到终点的节点队列
-
+def TestGetMinDistanceNodeList(map, oriIndex,desIndex,keyixiezhezou):
+    finalList = GetMinDistanceNodeList(map, oriIndex, desIndex,keyixiezhezou) #添加起点，并生成起点到终点的节点队列
     directions = (('↘','↓','↙'),('→',"S",'←'),('↗','↑','↖'))
     print('How To Go')
     for nodeRow in map:
         for node in nodeRow:
             if node in finalList:
-                #print('  *  ',end ='')
                 parent = node.parent
                 if parent != None:
                     if node.y!=desIndex[0] or node.x!=desIndex[1]:
@@ -200,4 +287,49 @@ def TestGetMinDistanceNodeList(map, mapSize, oriIndex,desIndex):
                     print('  X  ',end = " ")
         print()
     print()
+    TestLittleCarHowToGo(finalList,keyixiezhezou)    
+
+
+def TestLittleCarHowToGo(finalList,keyixiezhezou):
+    print('LittleCarHowToGo')
+    print(LittleCarHowToGo(finalList,keyixiezhezou))
+
+
+def API_LittleCarHowToGo(rawMap,oriIndex,desIndex):
+    keyixiezhezou = False #能不能斜着走
+    m = len(rawMap) #设置地图的长
+    n = len(rawMap[0]) #设置地图的宽
+    map = GenerateMap(m, n) #生成地图节点
+    obstacleList = list() #设置障碍
+    for i in range(m):
+        for j in range(n):
+            if int(rawMap[i][j]) == 1:
+                obstacleList.append((i,j))
+    map = SetUnableMapNode(map,obstacleList)  #在地图中添加障碍
+    GetDistanceFromDes(map,desIndex,keyixiezhezou) #添加终点，并计算节点与终点的距离
+    finalList = GetMinDistanceNodeList(map, oriIndex, desIndex,keyixiezhezou) #添加起点，并生成起点到终点的节点队列
+    return LittleCarHowToGo(finalList,keyixiezhezou)
+
+
+def main():
+    # 可视化显示所有信息
+    TestGetDistanceFromDes()
+    
+    # 小车走法API函数验证
+    rawMap = [ [0,1,0,0,0,0],
+                      [0,1,0,1,0,0],
+                      [0,1,0,1,0,0],
+                      [0,1,0,1,0,0],
+                      [0,0,0,1,0,0],
+                      [0,1,0,1,0,0] ]
+    oriIndex = (0,0)
+    desIndex = (5,5)
+    howToGo = API_LittleCarHowToGo(rawMap,oriIndex,desIndex)
+    print()
+    print('小车走法API函数验证，应该与上边的一样')
+    print(howToGo)
+
+
 main()
+
+
