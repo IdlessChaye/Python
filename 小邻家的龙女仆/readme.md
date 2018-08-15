@@ -2,7 +2,7 @@
 ## 效果图
 ![finalOutputPicture](https://github.com/IdlessChaye/Python/blob/master/%E5%B0%8F%E9%82%BB%E5%AE%B6%E7%9A%84%E9%BE%99%E5%A5%B3%E4%BB%86/dragon.png?raw=true)
 ## 用到的图片素材
-![samplePicture](https://github.com/IdlessChaye/Python/blob/master/%E5%B0%8F%E9%82%BB%E5%AE%B6%E7%9A%84%E9%BE%99%E5%A5%B3%E4%BB%86/1.jpg?raw=true)
+![samplePicture](https://github.com/IdlessChaye/Python/blob/master/%E5%B0%8F%E9%82%BB%E5%AE%B6%E7%9A%84%E9%BE%99%E5%A5%B3%E4%BB%86/code/1.jpg)
 ## 用到的模块
 - turtle
 - Image (PIL)
