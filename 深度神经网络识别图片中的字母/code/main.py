@@ -81,7 +81,7 @@ def main():
             print('是不是 {} ？(Y/N)'.format(result))
             ans = input()
             if Ans(ans):
-                print('太好了~')
+                print('good job')
             else:
                 print('emmmm...下次不会错了！')
         elif '3' in choice:
