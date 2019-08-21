@@ -18,6 +18,6 @@ Some embarrassing python demos
 
 ![DemoOutput](https://github.com/IdlessChaye/Python/blob/master/Astar/usage.PNG)
 
-4. [东方符卡名接龙](https://github.com/IdlessChaye/Python/tree/master/东方符卡名接龙)
+4. [东方符卡名接龙](https://github.com/IdlessChaye/Python/tree/master/%E4%B8%9C%E6%96%B9%E7%AC%A6%E5%8D%A1%E5%90%8D%E6%8E%A5%E9%BE%99)
 
-![东方符卡名接龙](https://github.com/IdlessChaye/Python/tree/master/东方符卡名接龙/sc.png)
+![东方符卡名接龙](https://github.com/IdlessChaye/Python/blob/master/%E4%B8%9C%E6%96%B9%E7%AC%A6%E5%8D%A1%E5%90%8D%E6%8E%A5%E9%BE%99/sc.png)
