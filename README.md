@@ -17,3 +17,7 @@ Some embarrassing python demos
 3. [Astar](https://github.com/IdlessChaye/Python/tree/master/Astar)
 
 ![DemoOutput](https://github.com/IdlessChaye/Python/blob/master/Astar/usage.PNG)
+
+4. [东方符卡名接龙](https://github.com/IdlessChaye/Python/tree/master/东方符卡名接龙)
+
+![东方符卡名接龙](https://github.com/IdlessChaye/Python/tree/master/东方符卡名接龙/sc.png)
